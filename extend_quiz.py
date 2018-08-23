@@ -49,8 +49,8 @@ def extend_user_access(input_list):
                 else:
                     _status = "SUCCESS"
                 
-            output = [course_id, quiz_id, student_number, extra_time, status]
-            if status == "SUCCESS":
+            output = [course_id, quiz_id, student_number, extra_time, _status]
+            if _status == "SUCCESS":
                 logging.info(", ".join(str(x) for x in output))
             else:
                 logging.warning(", ".join(str(x) for x in output))
