@@ -15,9 +15,9 @@ def read_from_csv(csv_file, headers, input_has_header=False):
                 return_list.append(row)
             return return_list
     except IOError as e:
-        print("I/O error({0} : {1})".format(e.errno, e))
+        logging.error("I/O error({0} : {1})".format(e.errno, e))
     except UnicodeDecodeError as e:
-        print("UnicodeDecodeError: {0}".format(e))
+        logging.error("UnicodeDecodeError: {0}".format(e))
     finally:
         return return_list
 

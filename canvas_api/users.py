@@ -32,16 +32,18 @@ def get_user_id_by_enrollment(canvas, student_number, course_id):
     
     response = canvas.call_api(_GET_USER_BY_ENROLLMENT.format(course_id=course_id,
                                                               student_number=student_number))
-    if not response:
-        return {"error":"null response"}
+
     
     if 'errors' in response:
         if response['errors'][0]['message'] == "The specified resource does not exist.":
-            return {"error":"user not found"}
+            return {"error":"course not found"}
         else:
             return {"error":response['errors'][0]['message']}
 
-    if len(response) == 1:
-        return response[0]
+    if type(response) is list:
+        if len(response) == 1:
+            return response[0]
+        else:
+            return {"error":"user not found"}
 
     return response

@@ -136,8 +136,9 @@ class CanvasInstance(Instance):
                 response_body = get_response_body(response)
                 if isinstance(response_body, collections.OrderedDict):
                     response_body = [response_body]
-                collector = collector + response_body      
+                collector = collector + response_body
                 for link in response.headers.get("Link").split(','):
+                    print(link)
                     parts = link.split(";")
                     if parts[1].find('next') >= 0:
                         next_page = parts[0]
