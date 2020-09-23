@@ -1,4 +1,4 @@
-name: QE_env
+name: quiz_extension
 channels:
   - conda-forge
   - anaconda
