@@ -1,0 +1,15 @@
+name: QE_env
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - python-dotenv
+  - reportlab
+  - termcolor
+  - requests
+  - jupyter
+  - pandas
+  - pip
+  - pip:
+      - canvasapi
