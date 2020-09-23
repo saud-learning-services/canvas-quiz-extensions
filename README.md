@@ -14,7 +14,7 @@ Python script for the function of batch changing the start and end dates for cou
 
 1. Open up Anaconda Prompt
 2. `$ conda env create -f environment.yml`
-3. `$ conda activate CBCD_env`
+3. `$ conda activate quiz_extension`
 4. `$ jupyter notebook`
 5. The previous command will have opened up a tab in your browser, select 'Canvas Batch Change Dates.ipynb' and follow the instructions listed.
 
