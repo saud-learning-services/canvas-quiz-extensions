@@ -8,7 +8,7 @@ A project that takes input in the form of CSV that extends a user's quiz access 
 
 ...
 
-## Acknowledgement
+## Acknowledgement :star2:
 This adapatation was forked from https://github.com/ubccapico/quiz-extension where the original author acknowledgements were:
 
 > ###  Author
