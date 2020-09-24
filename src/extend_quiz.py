@@ -13,13 +13,13 @@ except:
 
 FOLDER = os.path.abspath(os.getcwd())
 if imported:
-	INPUT = "{}\\src\\input".format(FOLDER)
-	OUTPUT = "{}\\src\\output".format(FOLDER)
-	LOGS = "{}\\src\\complete".format(FOLDER)
+	INPUT = "{}/src/input".format(FOLDER)
+	OUTPUT = "{}/src/output".format(FOLDER)
+	LOGS = "{}/src/complete".format(FOLDER)
 else:
-	INPUT = "{}\\src\\input".format(FOLDER)
-	OUTPUT = "{}\\src\\output".format(FOLDER)
-	LOGS = "{}\\src\\complete".format(FOLDER)
+	INPUT = "{}/src/input".format(FOLDER)
+	OUTPUT = "{}/src/output".format(FOLDER)
+	LOGS = "{}/src/complete".format(FOLDER)
 
 if imported == 0:
 	API_URL = "https://ubc.test.instructure.com/"
