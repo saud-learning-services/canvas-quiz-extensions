@@ -1,14 +1,11 @@
 # Quiz Extensions
 
-A project that takes input in the form of CSV that extends a user's quiz access for given number of minutes.
+A project that takes input in the form of two CSVs and adds extra time or attempts for students on a list of quizzes
 
-## TO BE UPDATED, CURRENTLY ONLY A COPY FROM ANOTHER REPO
-
-Python script for the function of batch changing the start and end dates for courses listed in a CSV using Jupyter notebook interface:
-
-1. List of courses to change with corresponding start and end dates are entered in ./src/csv/input/start_end_courses.csv
-2. Jupyter Notebook interface will guide user through script, asking for relevant user input when necessary
-3. Errors will be shown when necessary by the interface
+1. List of students with corresponding extra attempts and time to change are entered in ./src/input/student_input.csv
+2. List of quizzes to change for students are entered in ./src/input/quiz_list.csv
+3. Jupyter Notebook interface will guide user through script, asking for relevant user input when necessary
+4. Errors will be shown when necessary by the interface, and failed attempts will be logged in ./src/log
 
 ## To Run
 
@@ -21,12 +18,13 @@ Python script for the function of batch changing the start and end dates for cou
 ## Inputs for Module
 
 1. Canvas API Token
-2. start_end_courses.csv (edit file as needed)
+2. Canvas Course ID
+4. Student and Quiz CSVs
 
 ## Contribution Guidelines:
 **These guidelines assume you have a basic understanding of Git. If you do not please look at this resource here.**
 1. If you wish to contribute, clone the repository.
-2. Switch the branch to **CBCD_dev** or make your own branch if you prefer.
+2. Switch the branch to **dev** or make your own branch if you prefer.
 3. Make your changes. Commit them with a proper message.
 4. Make a pull request from your branch or dev branch into the master branch. Someone will review these changes. If anything needs to be changed, you will be contacted through GitHub.
 
