@@ -55,27 +55,26 @@ def _get_quiz(course_obj, quiz_id):
 	return quiz
 
 def _get_students(course_id, auth_header):
-	'''
-	Function gets a list of students for a course
-	Parameters:
-		course_id (int): Canvas course id
-		auth_header (dict): Authorization header for canvas API request. See top for format
-	Returns:
-		student_list (json): a list of students in json
-	'''
+    '''
+    Function gets a list of students for a course
+    Parameters:
+        course_id (int): Canvas course id
+        auth_header (dict): Authorization header for canvas API request. See top for format
+    Returns:
+        student_list (json): a list of students in json
+    '''
 
-	# Get students in course
-	'''
-	try:
-		student_list = course.get_users()
-	'''
-	# Above code doesn't return student SIS ID, forced to use request lib temporarily
-	try:
-		url = "{}api/v1/courses/{}/users".format(API_URL, course_id)
-		student_list = requests.get(url, headers=auth_header, params={'enrollment_type[]':'student'})
-	except Exception as se:
-		# print(str(se))
-		shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
-
-	student_list = json.loads(student_list.text)
-    return(student_list)
+    # Get students in course
+    '''
+    try:
+        student_list = course.get_users()
+    '''
+    # Above code doesn't return student SIS ID, forced to use request lib temporarily
+    try:
+        url = "{}api/v1/courses/{}/users".format(API_URL, course_id)
+        student_list = requests.get(url, headers=auth_header, params={'enrollment_type[]':'student'})
+        student_list = json.loads(student_list.text)
+        return(student_list)
+    except Exception as se:
+        # print(str(se))
+        shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
