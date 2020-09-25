@@ -3,28 +3,19 @@ import pandas as pd
 from termcolor import cprint
 from canvasapi import Canvas
 from datetime import datetime
+from src.helpers import create_instance, _get_course, _get_quiz, _get_students
+from src.util import shut_down, print_error, print_success
 
-# Able to run from either Jupyter notebook or terminal
-imported = 0
-try:
-    from helpers import create_instance, _get_course, _get_quiz, _get_students
-    from util import shut_down, print_error, print_success
-except:
-    from src.helpers import create_instance, _get_course, _get_quiz, _get_students
-    from src.util import shut_down, print_error, print_success
-    imported = 1
+
+mode = "test"
 
 FOLDER = os.path.abspath(os.getcwd())
-if imported:
-    INPUT = "{}/src/input".format(FOLDER)
-    OUTPUT = "{}/src/output".format(FOLDER)
-    LOGS = "{}/src/log".format(FOLDER)
-else:
-    INPUT = "{}/src/input".format(FOLDER)
-    OUTPUT = "{}/src/output".format(FOLDER)
-    LOGS = "{}/src/log".format(FOLDER)
 
-if imported == 0:
+INPUT = "{}/input".format(FOLDER)
+LOGS = "{}/src/log".format(FOLDER)
+
+
+if mode == "test":
     API_URL = "https://ubc.test.instructure.com/"
 else:
     API_URL = input("Enter Canvas URL instance: ")
