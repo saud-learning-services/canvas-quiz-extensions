@@ -10,7 +10,7 @@ try:
 	from helpers import create_instance, _get_course, _get_quiz, _get_students
 	from util import shut_down
 except:
-	from src.helpers import create_instance
+	from src.helpers import reate_instance, _get_course, _get_quiz, _get_students
 	from src.util import shut_down, print_error
 	imported = 1
 
