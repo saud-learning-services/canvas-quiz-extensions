@@ -7,6 +7,9 @@ import sys
 import pandas as pd
 import re
 import ast
+from util import shut_down, print_error, print_success
+import requests
+import json
 #import re 
 
 # tries to create a canvas instance
@@ -14,7 +17,7 @@ import ast
 def create_instance(API_URL, API_KEY):
     try:
         canvas = Canvas(API_URL, API_KEY)
-        print("Token Valid: {}".format(str(canvas.get_user('self'))))
+        print_success("Token Valid: {}".format(str(canvas.get_user('self'))))
         return(canvas)
     except Exception as e:
         print("\nInvalid Token: {}\n{}".format(API_KEY, str(e)))
@@ -22,39 +25,41 @@ def create_instance(API_URL, API_KEY):
         #raise
 
 def _get_course(canvas_obj, course_id):
-	'''
-	Get Canvas course using canvas object from canvasapi
-	Parameters:
-		course (Canvas): canvasapi instance
-		course_id (int): Canvas course ID
-	Returns:
-		canvasapi.course.Course object
-	'''
-	try:
-		course = canvas_obj.get_course(course_id)
-	except Exception:
-		shut_down(f'ERROR: Could not find course [ID: {course_id}]. Please check course id.')
+    '''
+    Get Canvas course using canvas object from canvasapi
+    Parameters:
+        course (Canvas): canvasapi instance
+        course_id (int): Canvas course ID
+    Returns:
+        canvasapi.course.Course object
+    '''
+    try:
+        course = canvas_obj.get_course(course_id)
+        print_success(f'Entered id: {course_id}, Course: {course.name}.')
+    except Exception:
+        shut_down(f'ERROR: Could not find course [ID: {course_id}]. Please check course id.')
 
-	return course
+    return course
 
 def _get_quiz(course_obj, quiz_id):
-	'''
-	Get Canvas course quiz using canvas.course.Course object from canvasapi
-	Parameters:
-		course (Canvas): canvasapi instance
-		quiz_id (int): Canvas quiz ID
-	Returns:
-		canvasapi.quiz.Quiz object
-	'''
+    '''
+    Get Canvas course quiz using canvas.course.Course object from canvasapi
+    Parameters:
+        course (Canvas): canvasapi instance
+        quiz_id (int): Canvas quiz ID
+    Returns:
+        canvasapi.quiz.Quiz object
+    '''
 
-	try:
-		quiz = course_obj.get_quiz(quiz_id)
-	except Exception as qe:
-		shut_down(f'ERROR: Could not find quiz [ID: {quiz_id}]. Please check course id.')
+    try:
+        quiz = course_obj.get_quiz(quiz_id)
+        return(quiz)
+    except Exception as qe:
+        print_error(f'ERROR: Could not find quiz [ID: {quiz_id}]. Please check course id.')
+        raise
+    
 
-	return quiz
-
-def _get_students(course_id, auth_header):
+def _get_students(course_id, auth_header, API_URL):
     '''
     Function gets a list of students for a course
     Parameters:
@@ -77,4 +82,5 @@ def _get_students(course_id, auth_header):
         return(student_list)
     except Exception as se:
         # print(str(se))
-        shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
+        shut_down(f'{se}')
+        #shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
