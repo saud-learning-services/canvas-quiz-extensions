@@ -9,27 +9,9 @@ import re
 import ast
 #import re 
 
-
-def createCSV(df, output_name):
-    print(df.head())
-
-    while True:
-        confirmation = input("Your csv will be called: {}\nDo you want to generate this csv from with the data above? (y/n): ".format(output_name))
-        
-        if confirmation == "y":
-            df.to_csv(output_name, index=False)
-            print("\n{} created.\nBye!".format(output_name))
-            break
-        elif confirmation =="n":
-            print("\nCsv not created. You can run the script again or exit for no further action.\n")
-            break
-        else:
-            print("Please enter 'y' to accept or 'n' to exit\n")
-            continue
-
 # tries to create a canvas instance
 # checks that it is valid by getting self information
-def createInstance(API_URL, API_KEY):
+def create_instance(API_URL, API_KEY):
     try:
         canvas = Canvas(API_URL, API_KEY)
         print("Token Valid: {}".format(str(canvas.get_user('self'))))
@@ -39,13 +21,61 @@ def createInstance(API_URL, API_KEY):
         sys.exit(1)
         #raise
 
-# get course id
-def getCourseFromID(canvas):
-    course_id = input("Enter Course ID: ")
-    try:            
-        course = canvas.get_course(course_id)
-        print("Course ID: {}\nCourse Name: {}\n".format(course.id, course.name))
-        return(course_id, course)
-    except Exception as e:
-        print(str(e))
-        sys.exit(1)
+def _get_course(canvas_obj, course_id):
+	'''
+	Get Canvas course using canvas object from canvasapi
+	Parameters:
+		course (Canvas): canvasapi instance
+		course_id (int): Canvas course ID
+	Returns:
+		canvasapi.course.Course object
+	'''
+	try:
+		course = canvas_obj.get_course(course_id)
+	except Exception:
+		shut_down(f'ERROR: Could not find course [ID: {course_id}]. Please check course id.')
+
+	return course
+
+def _get_quiz(course_obj, quiz_id):
+	'''
+	Get Canvas course quiz using canvas.course.Course object from canvasapi
+	Parameters:
+		course (Canvas): canvasapi instance
+		quiz_id (int): Canvas quiz ID
+	Returns:
+		canvasapi.quiz.Quiz object
+	'''
+
+	try:
+		quiz = course_obj.get_quiz(quiz_id)
+	except Exception as qe:
+		shut_down(f'ERROR: Could not find quiz [ID: {quiz_id}]. Please check course id.')
+
+	return quiz
+
+def _get_students(course_id, auth_header):
+	'''
+	Function gets a list of students for a course
+	Parameters:
+		course_id (int): Canvas course id
+		auth_header (dict): Authorization header for canvas API request. See top for format
+	Returns:
+		student_list (json): a list of students in json
+	'''
+
+	# Get students in course
+	'''
+	try:
+		student_list = course.get_users()
+	'''
+	# Above code doesn't return student SIS ID, forced to use request lib temporarily
+	try:
+		url = "{}api/v1/courses/{}/users".format(API_URL, course_id)
+		student_list = requests.get(url, headers=auth_header, params={'enrollment_type[]':'student'})
+	except Exception as se:
+		# print(str(se))
+		shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
+
+	student_list = json.loads(student_list.text)
+    return(student_list)

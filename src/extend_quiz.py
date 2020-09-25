@@ -7,10 +7,10 @@ from datetime import datetime
 imported = 0
 
 try:
-	from helpers import createInstance
+	from helpers import create_instance, _get_course, _get_quiz, _get_students
 	from util import shut_down
 except:
-	from src.helpers import createInstance
+	from src.helpers import create_instance
 	from src.util import shut_down, print_error
 	imported = 1
 
@@ -34,50 +34,19 @@ else:
 API_KEY = getpass.getpass("Enter Token: ")
 # API_KEY = ''
 
-canvas = createInstance(API_URL, API_KEY)
+canvas = create_instance(API_URL, API_KEY)
 
 AUTH_HEADER = {'Authorization': f'Bearer {API_KEY}'}
 
-'''
-	Get Canvas course using canvas object from canvasapi
-	Parameters:
-		course (Canvas): canvasapi instance
-		course_id (int): Canvas course ID
-	Returns:
-		canvasapi.course.Course object
-'''
-def getCourse(canvas_obj, course_id):
-	try:
-		course = canvas_obj.get_course(course_id)
-	except Exception:
-		shut_down(f'ERROR: Could not find course [ID: {course_id}]. Please check course id.')
 
-	return course
-
-'''
-	Get Canvas course quiz using canvas.course.Course object from canvasapi
-	Parameters:
-		course (Canvas): canvasapi instance
-		quiz_id (int): Canvas quiz ID
-	Returns:
-		canvasapi.quiz.Quiz object
-'''
-def getQuiz(course_obj, quiz_id):
-	try:
-		quiz = course_obj.get_quiz(quiz_id)
-	except Exception as qe:
-		shut_down(f'ERROR: Could not find quiz [ID: {quiz_id}]. Please check course id.')
-
-	return quiz
-
-'''
+def dl_quizzes(course_obj):
+	'''
 	Download list of quizzes in a given course, and puts it into a CSV for users to edit
 	Parameters:
 		course (canvas.course.Course): Canvas course object from canvasapi
 	Returns:
 		None. But a CSV is created under input folder called 'quiz_inputs.csv'
-'''
-def dl_quizzes(course_obj):
+	'''
 	try:
 		quiz_list = course_obj.get_quizzes()
 	except Exception as qle:
@@ -92,30 +61,16 @@ def dl_quizzes(course_obj):
 	path = os.path.join(INPUT, 'quiz_input.csv')
 	df.to_csv(path, index=False)
 
-'''
-	Function gets a list of students for a course
+
+
+def create_student_df(student_list):
+	'''
+	Create dataframe of students from student list 
 	Parameters:
-		course_id (int): Canvas course id
-		auth_header (dict): Authorization header for canvas API request. See top for format
+		student_list (json): (created by _get_students)
 	Returns:
-		None. But a csv is created in src/input
-'''
-def getStudents(course_id, auth_header):
-	# Get students in course
+		None (creates csv from data)
 	'''
-	try:
-		student_list = course.get_users()
-	'''
-	# Above code doesn't return student SIS ID, forced to use request lib temporarily
-	try:
-		url = "{}api/v1/courses/{}/users".format(API_URL, course_id)
-		student_list = requests.get(url, headers=auth_header, params={'enrollment_type[]':'student'})
-	except Exception as se:
-		# print(str(se))
-		shut_down(f'ERROR: Could not find students for course [ID: {course_id}]. Please check course id.')
-
-	student_list = json.loads(student_list.text)
-
 	# Default for extra_time and extra_attempts is null as requested
 	df = pd.DataFrame(columns=['name','SIS_id','canvas_id','extra_time','extra_attempts'])
 	for student in student_list:
@@ -129,7 +84,9 @@ def getStudents(course_id, auth_header):
 	path = os.path.join(INPUT, 'student_input.csv')
 	df.to_csv(path, index=False)
 
-'''
+
+def extend_quiz_s(course, quiz_id, student_id, time, attempt):
+	'''
 	Extend time limit for a given user in a given course taking a given quiz for a specified time
 	Parameters:
 		course (Canvas.course.Course): Canvas course object from canvasapi
@@ -139,11 +96,10 @@ def getStudents(course_id, auth_header):
 	Returns:
 		0 (int): Extension failed
 		1 (int): Extension succeeded 
-'''
-def extend_quiz_s(course, quiz_id, student_id, time, attempt):
+	'''
 
 	# Get Quiz from course
-	quiz = getQuiz(course, quiz_id)
+	quiz = _get_quiz(course, quiz_id)
 
 	# Extend Quiz for given canvas student_id:
 	student_dict = {'user_id': student_id, 'extra_time': time, 'extra_attempts': attempt}
@@ -155,7 +111,9 @@ def extend_quiz_s(course, quiz_id, student_id, time, attempt):
 
 	return 1
 
-'''
+
+def extend_quiz_a():
+	'''
 	Main function of script. 
 	Steps are outlined below:
 		1. Enter Canvas Course ID, see URL
@@ -169,12 +127,12 @@ def extend_quiz_s(course, quiz_id, student_id, time, attempt):
 		None.
 	Returns:
 		None.
-'''
-def extend_quiz_a():
+	'''
+
 	# Test values
 	course_id = input("\nEnter your desired Canvas course id: ")
 	# course_id = 10751
-	course = getCourse(canvas, course_id)
+	course = _get_course(canvas, course_id)
 
 	print("\nFor first time use on a machine, the following two steps are mandatory.")
 	cr_csv = input("\nDo you want to create a Quiz List CSV to edit as input (Y/N): ")
@@ -187,7 +145,7 @@ def extend_quiz_a():
 	cr_csv = cr_csv.strip().upper()
 
 	if(cr_csv == "Y"):
-		getStudents(course_id, AUTH_HEADER)
+		create_student_df(_get_students(course_id, AUTH_HEADER))
 
 	input("This is the time to edit the input CSVs under, src/inputs. Press any key to continue: ")
 
