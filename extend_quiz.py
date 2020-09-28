@@ -156,17 +156,17 @@ def extend_quiz_a():
         st_df = pd.read_csv(path_a)
         qz_df = pd.read_csv(path_b)
         sys.stdout.write("\r\n{}\n".format(st_df.to_string()))
-        sys.stdout.write("\n{}".format(qz_df.to_string()))
+        sys.stdout.write("\n{}\n".format(qz_df.to_string()))
         sys.stdout.flush()
 
-        confirm = continue_quit("\nPlease confirm the output:", False)
+        confirm = continue_quit("\nPlease confirm that the tables above are correct: ", False)
 
+    print_success("Applying changes to specified quizzes/students...\n")
     # Create Progress Tracker
     x = len(st_df['canvas_id'])
     y = len(qz_df['id'])
     total = x*y
     count = 0
-    print("\nPlease Wait...")
     sys.stdout.write("0/{}".format(total))
     sys.stdout.flush()
 
