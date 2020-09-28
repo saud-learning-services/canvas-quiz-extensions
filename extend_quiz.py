@@ -136,31 +136,30 @@ def extend_quiz_a():
 
     print("\nFor first time use on a machine, the following two steps are mandatory.")
 
-    if continue_quit("Do you want to create a Quiz List CSV to edit as input", True):
+    if continue_quit("Do you want to download a Quiz List CSV to edit as input", True):
         print_action("Downloading quiz list...\nMake sure you edit and save as quiz_input.csv")
         dl_quizzes(course)
 
-    if continue_quit("Do you want to create a Quiz List CSV to edit as input", True):
+    if continue_quit("Do you want to download a Student List CSV to edit as input", True):
         print_action("Downloading student list...\nMake sure you edit and save as student_input.csv")
         dl_students(course_id, AUTH_HEADER, API_URL)
         
-    print("This is the time to edit the input CSVs under, src/inputs.")
+    print_action("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv")
+    
 
-    confirm = "N"
-    while confirm != "Y":
-        # Read Input CSVs
-        path_a = os.path.join(INPUT, 'student_input.csv')
+    path_a = os.path.join(INPUT, 'student_input.csv')
+    path_b = os.path.join(INPUT, 'quiz_input.csv')
+        
+    
+    confirm = False
+    while confirm != True:  
         st_df = pd.read_csv(path_a)
-
-        path_b = os.path.join(INPUT, 'quiz_input.csv')
         qz_df = pd.read_csv(path_b)
-
         sys.stdout.write("\r\n{}\n".format(st_df.to_string()))
         sys.stdout.write("\n{}".format(qz_df.to_string()))
         sys.stdout.flush()
 
-        confirm = input("\nAre these the correct inputs (it will make the changes to the above students on ALL listed quizzes)? (Y/N): ").strip().upper()
-
+        confirm = continue_quit("\nPlease confirm the output:", False)
 
     # Create Progress Tracker
     x = len(st_df['canvas_id'])

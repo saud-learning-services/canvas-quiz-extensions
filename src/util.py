@@ -66,6 +66,7 @@ def continue_quit(in_msg, move_on=False):
             if move_on:
                 break
             else:
+                return (False)
                 selection
         else:
             shut_down("Shut down selected. Ending process.")
