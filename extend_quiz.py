@@ -8,7 +8,7 @@ from src.helpers import create_instance, _get_course, _get_quiz, _get_students
 from src.util import shut_down, print_error, print_success, print_action, continue_quit
 
 
-#mode = "test"
+mode = "prod" #test
 
 FOLDER = os.path.abspath(os.getcwd())
 
