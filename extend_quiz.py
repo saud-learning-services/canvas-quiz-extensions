@@ -3,28 +3,20 @@ import pandas as pd
 from termcolor import cprint
 from canvasapi import Canvas
 from datetime import datetime
+import os
+from src.helpers import create_instance, _get_course, _get_quiz, _get_students
+from src.util import shut_down, print_error, print_success, print_action, continue_quit
 
-# Able to run from either Jupyter notebook or terminal
-imported = 0
-try:
-    from helpers import create_instance, _get_course, _get_quiz, _get_students
-    from util import shut_down, print_error, print_success
-except:
-    from src.helpers import create_instance, _get_course, _get_quiz, _get_students
-    from src.util import shut_down, print_error, print_success
-    imported = 1
+
+mode = "test"
 
 FOLDER = os.path.abspath(os.getcwd())
-if imported:
-    INPUT = "{}/src/input".format(FOLDER)
-    OUTPUT = "{}/src/output".format(FOLDER)
-    LOGS = "{}/src/log".format(FOLDER)
-else:
-    INPUT = "{}/src/input".format(FOLDER)
-    OUTPUT = "{}/src/output".format(FOLDER)
-    LOGS = "{}/src/log".format(FOLDER)
 
-if imported == 0:
+INPUT = "{}/input".format(FOLDER)
+LOGS = "{}/src/log".format(FOLDER)
+
+
+if mode == "test":
     API_URL = "https://ubc.test.instructure.com/"
 else:
     API_URL = input("Enter Canvas URL instance: ")
@@ -143,43 +135,38 @@ def extend_quiz_a():
     course = _get_course(canvas, course_id)
 
     print("\nFor first time use on a machine, the following two steps are mandatory.")
-    cr_csv = input("\nDo you want to create a Quiz List CSV to edit as input (Y/N): ")
-    cr_csv = cr_csv.strip().upper()
 
-    if(cr_csv == "Y"):
+    if continue_quit("Do you want to download a Quiz List CSV to edit as input", True):
+        print_action("Downloading quiz list...\nMake sure you edit and save as quiz_input.csv")
         dl_quizzes(course)
 
-    cr_csv = input("\nDo you want to create a Student List CSV to edit as input (Y/N): ")
-    cr_csv = cr_csv.strip().upper()
-
-    if(cr_csv == "Y"):
+    if continue_quit("Do you want to download a Student List CSV to edit as input", True):
+        print_action("Downloading student list...\nMake sure you edit and save as student_input.csv")
         dl_students(course_id, AUTH_HEADER, API_URL)
-        cprint
+        
+    print_action("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv")
+    
 
-    input("This is the time to edit the input CSVs under, src/inputs. Press any key to continue: ")
-
-    confirm = "N"
-    while confirm != "Y":
-        # Read Input CSVs
-        path_a = os.path.join(INPUT, 'student_input.csv')
+    path_a = os.path.join(INPUT, 'student_input.csv')
+    path_b = os.path.join(INPUT, 'quiz_input.csv')
+        
+    
+    confirm = False
+    while confirm != True:  
         st_df = pd.read_csv(path_a)
-
-        path_b = os.path.join(INPUT, 'quiz_input.csv')
         qz_df = pd.read_csv(path_b)
-
         sys.stdout.write("\r\n{}\n".format(st_df.to_string()))
-        sys.stdout.write("\n{}".format(qz_df.to_string()))
+        sys.stdout.write("\n{}\n".format(qz_df.to_string()))
         sys.stdout.flush()
 
-        confirm = input("\nAre these the correct inputs (it will make the changes to the above students on ALL listed quizzes)? (Y/N): ").strip().upper()
+        confirm = continue_quit("\nPlease confirm that the tables above are correct: ", False)
 
-
+    print_success("Applying changes to specified quizzes/students...\n")
     # Create Progress Tracker
     x = len(st_df['canvas_id'])
     y = len(qz_df['id'])
     total = x*y
     count = 0
-    print("\nPlease Wait...")
     sys.stdout.write("0/{}".format(total))
     sys.stdout.flush()
 
@@ -218,9 +205,6 @@ def extend_quiz_a():
     # Close log file, signal completed
     log_file.close()
     print("\nCompleted! Please check file under ./src/log for any failed extensions.")
-
-if imported:
-    extend_quiz_a()
 
 if __name__ == '__main__':
     extend_quiz_a()

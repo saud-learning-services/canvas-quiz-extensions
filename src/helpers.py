@@ -7,11 +7,14 @@ import sys
 import pandas as pd
 import re
 import ast
-from util import shut_down, print_error, print_success
+from src.util import shut_down, print_error, print_success
 import requests
 import json
 #import re 
 
+'''
+CANVAS FUNCTIONS - GETTING OR SENDING DATA 
+'''
 # tries to create a canvas instance
 # checks that it is valid by getting self information
 def create_instance(API_URL, API_KEY):
