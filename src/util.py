@@ -33,3 +33,39 @@ def print_success(msg):
         None
     '''
     cprint(f'\n{msg}\n', 'green')
+
+def print_action(msg):
+    '''
+    Prints a message that requires the user to do something
+    Parameters:
+        msg (string): Action message to print
+    Returns:
+        None
+    '''
+    cprint(f'\n{msg}\n', 'blue')
+
+def continue_quit(in_msg, move_on=False):
+    '''
+    Prints a message that requires the user to confirm to move forward or quit
+    Parameters:
+        msg (string): Action message to print
+    Returns:
+        True (boolean): only when selection == "Y", otherwise no action or sys.exit()
+    '''
+    if move_on:
+        options = f'\nY - yes, continue\nN - no, continue\nAny other key - exit'
+    else:
+        options = f'\nY - confirmed, continue\nN - not confirmed, continue\nAny other key - exit'
+
+    while True:
+        selection = input(f'{in_msg}{options}: ').strip().upper()
+
+        if selection == "Y":
+            return True
+        elif selection == "N":
+            if move_on:
+                break
+            else:
+                selection
+        else:
+            shut_down("Shut down selected. Ending process.")

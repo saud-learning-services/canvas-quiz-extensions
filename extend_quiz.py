@@ -3,8 +3,9 @@ import pandas as pd
 from termcolor import cprint
 from canvasapi import Canvas
 from datetime import datetime
+import os
 from src.helpers import create_instance, _get_course, _get_quiz, _get_students
-from src.util import shut_down, print_error, print_success
+from src.util import shut_down, print_error, print_success, print_action, continue_quit
 
 
 mode = "test"
@@ -134,20 +135,16 @@ def extend_quiz_a():
     course = _get_course(canvas, course_id)
 
     print("\nFor first time use on a machine, the following two steps are mandatory.")
-    cr_csv = input("\nDo you want to create a Quiz List CSV to edit as input (Y/N): ")
-    cr_csv = cr_csv.strip().upper()
 
-    if(cr_csv == "Y"):
+    if continue_quit("Do you want to create a Quiz List CSV to edit as input", True):
+        print_action("Downloading quiz list...\nMake sure you edit and save as quiz_input.csv")
         dl_quizzes(course)
 
-    cr_csv = input("\nDo you want to create a Student List CSV to edit as input (Y/N): ")
-    cr_csv = cr_csv.strip().upper()
-
-    if(cr_csv == "Y"):
+    if continue_quit("Do you want to create a Quiz List CSV to edit as input", True):
+        print_action("Downloading student list...\nMake sure you edit and save as student_input.csv")
         dl_students(course_id, AUTH_HEADER, API_URL)
-        cprint
-
-    input("This is the time to edit the input CSVs under, src/inputs. Press any key to continue: ")
+        
+    print("This is the time to edit the input CSVs under, src/inputs.")
 
     confirm = "N"
     while confirm != "Y":
@@ -209,9 +206,6 @@ def extend_quiz_a():
     # Close log file, signal completed
     log_file.close()
     print("\nCompleted! Please check file under ./src/log for any failed extensions.")
-
-if imported:
-    extend_quiz_a()
 
 if __name__ == '__main__':
     extend_quiz_a()
