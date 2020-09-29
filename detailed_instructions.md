@@ -20,8 +20,6 @@ This script will add extra time and/or extra attempts for Canvas Quizzes based u
 
 `$ git clone https://github.com/saud-learning-services/quiz-extension-saudls`
 
-
-
 ### Environment
 > You only need to do the set up once. You cannot run the script without following the setup steps. 
 
@@ -30,7 +28,6 @@ This script will add extra time and/or extra attempts for Canvas Quizzes based u
 - navigate to your local project (use different path if needed)
 `$ cd Documents/GitHub/quiz-extension-saudls` 
 `$ conda env create -f environment.yml`
-
 
 ## To Run
 ### You Will Need
@@ -59,17 +56,12 @@ This script will add extra time and/or extra attempts for Canvas Quizzes based u
 #### 3. Quiz Input & Student Input
 - Your input should indicate what you want to change. If you do not want a change to be made for a course or a student - **remove them from the files**. 
 - The input files should be in the project directory in `input`.
-
 - When you run the script you will be given the option of creating a student list and a quiz list, these can be edited and act as the input. However, if you know the courses and quizzes, you can create your own.
-
 - The following examples include "optional" fields which are included when you choose to generate them when you run the script. 
   - No extra_time or extra_attempts are assumed when the script creates your files. 
 
-
 `input/quiz_input.csv`
-
 ![](_assets/quiz_file.png)
-
 `input/student_input.csv`
 ![](_assets/student_file.png)
 
