@@ -17,6 +17,7 @@ This script will add extra time and/or extra attempts for Canvas Quizzes based u
 - We recommend using a directory like Documents/GitHub/
 
 `$ cd Documents/GitHub`
+
 `$ git clone https://github.com/saud-learning-services/quiz-extension-saudls`
 
 
@@ -43,7 +44,7 @@ This script will add extra time and/or extra attempts for Canvas Quizzes based u
 #### 2. A Canvas Token
 
 > :warning::exclamation: **Never share your Canvas Token.** This is your username and password & would allow anyone to access as if they were you. Treat this very carefully.
-> 
+
 - navigate to `Account -> Settings`
 - scroll to Approved Integrations, and you will see the option to create a New Access Token
 - select `+ New Access Token`
@@ -98,13 +99,13 @@ https://ubc.test.instructure.com/
 
 - You will be asked if you want to generate the quiz_input file
 - You will be asked if you want to generate the student_input file 
-</br>
+
   - If you choose to not create these files then you should have your input files ready in `input`:
     ```
     quiz_input.csv
     student_input.csv
     ```
-    </br>
+ 
   - If you choose to create these files:
     - The inital files are found in `input` and are called
     ```
