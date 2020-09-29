@@ -77,10 +77,9 @@ In terminal
 
 ### Follow the Prompts & Confirmations in Terminal
 **Course Information**
-- You will be asked for your canvas url (note, ubc.test is for the test environment)
+- The script assumes you are using ubc.instructure.com (canvas.ubc.ca). If you want to run in "test" environment you must change mode to "test" in the script. We do not recommend this!
 ```
 https://ubc.instructure.com/
-https://ubc.test.instructure.com/
 ```
 
 - You will be asked to input your canvas token

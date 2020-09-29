@@ -19,11 +19,14 @@ LOGS = "{}/src/log".format(FOLDER)
 if mode == "test":
     API_URL = "https://ubc.test.instructure.com/"
 else:
-    API_URL = input("Enter Canvas URL instance: ")
+    print("Using https://ubc.instructure.com/")
+    API_URL = "https://ubc.instructure.com/"
+    # API_URL = input("Enter Canvas URL instance: ")
 
 # WARNING: Using Ctrl + V for getpass on windows on console seems to cause wonky issues. 
 # Not a problem on UI though, only when using console.
-API_KEY = getpass.getpass("Enter Token: ")
+# API_KEY = getpass.getpass("Enter Token: ") - getpass on windows
+API_KEY = input("Enter Token: ")
 # API_KEY = ''
 print_success(f'Using URL: {API_URL}')
 canvas = create_instance(API_URL, API_KEY)
