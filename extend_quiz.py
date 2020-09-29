@@ -134,17 +134,17 @@ def extend_quiz_a():
     
     course = _get_course(canvas, course_id)
 
-    print("\nFor first time use on a machine, the following two steps are mandatory.")
+    print_action("\nFor first time use on a machine, the following two steps are mandatory.")
 
     if continue_quit("Do you want to download a Quiz List CSV to edit as input", True):
-        print_action("Downloading quiz list...\nMake sure you edit and save as quiz_input.csv")
+        print_action("Downloaded Quiz List\nMake sure you edit and save as quiz_input.csv")
         dl_quizzes(course)
 
     if continue_quit("Do you want to download a Student List CSV to edit as input", True):
-        print_action("Downloading student list...\nMake sure you edit and save as student_input.csv")
+        print_action("Downloading Student List\nMake sure you edit and save as student_input.csv")
         dl_students(course_id, AUTH_HEADER, API_URL)
         
-    print_action("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv")
+    print_action("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv\n\n")
     
 
     path_a = os.path.join(INPUT, 'student_input.csv')
