@@ -19,8 +19,9 @@ LOGS = "{}/src/log".format(FOLDER)
 if mode == "test":
     API_URL = "https://ubc.test.instructure.com/"
 else:
-    print("Using https://ubc.instructure.com/")
-    API_URL = "https://ubc.instructure.com/"
+    URL = "https://ubc.instructure.com/"
+    print(f"Using {URL}...")
+    API_URL = URL
     # API_URL = input("Enter Canvas URL instance: ")
 
 # WARNING: Using Ctrl + V for getpass on windows on console seems to cause wonky issues. 
