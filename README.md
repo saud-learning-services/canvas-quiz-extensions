@@ -15,7 +15,7 @@ A project that takes input in the form of two CSVs and adds extra time or attemp
 - We have not tested the behaviour of this script for non-published or past-due quizzes
   
 ## To Run
-For more detailed instructions see *link here*
+For more detailed instructions see [Detailed Instructions]("quiz-extension-saudls/detailed_instructions.md")
 ### First Time
 You will need to create the quiz_extension environment. We use conda to manage our projects.
 `$ conda env create -f environment.yml`
