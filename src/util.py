@@ -58,7 +58,8 @@ def continue_quit(in_msg, move_on=False):
         options = f'\nY - confirmed, continue\nN - not confirmed, continue\nAny other key - exit'
 
     while True:
-        selection = input(f'{in_msg}{options}: ').strip().upper()
+        print(f'{in_msg}{options}')
+        selection = input('Enter Y/N: ').strip().upper()
 
         if selection == "Y":
             return True
