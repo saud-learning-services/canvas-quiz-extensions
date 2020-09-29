@@ -144,7 +144,7 @@ def extend_quiz_a():
         print_action("Downloading Student List\nMake sure you edit and save as student_input.csv")
         dl_students(course_id, AUTH_HEADER, API_URL)
         
-    print_action("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv\n\n")
+    continue_quit("Ensure you have the correct data and files in 'input'. You should have\n\t - quiz_input.csv\n\t - student_input.csv\n\n")
     
 
     path_a = os.path.join(INPUT, 'student_input.csv')
