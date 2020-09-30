@@ -60,9 +60,20 @@ def _get_quiz(course_obj, quiz_id):
     except Exception as qe:
         print_error(f'ERROR: Could not find quiz [ID: {quiz_id}]. Please check course id.')
         raise
-    
 
-def _get_students(course_id, auth_header, API_URL):
+def _paginate_list(sub_list, auth_header):
+    json_list = pd.read_json(sub_list.text)
+    
+    while sub_list.links['current']['url'] != sub_list.links['last']['url']:
+        sub_list =  requests.get(sub_list.links['next']['url'],
+                     headers=auth_header)
+        admin_sub_table = pd.read_json(sub_list.text)
+        json_list= pd.concat([json_list, admin_sub_table], sort=True)
+        json_list=json_list.reset_index(drop=True)
+    
+    return json_list
+
+def _get_students(course_id, AUTH_HEADER, API_URL):
     '''
     Function gets a list of students for a course
     Parameters:
@@ -80,8 +91,9 @@ def _get_students(course_id, auth_header, API_URL):
     # Above code doesn't return student SIS ID, forced to use request lib temporarily
     try:
         url = "{}api/v1/courses/{}/users".format(API_URL, course_id)
-        student_list = requests.get(url, headers=auth_header, params={'enrollment_type[]':'student'})
-        student_list = json.loads(student_list.text)
+        student_list = requests.get(url, headers=AUTH_HEADER, params={'enrollment_type[]':'student', 'per_page':50})
+        student_list = _paginate_list(student_list, AUTH_HEADER)
+        #student_list = json.loads(student_list.text)
         return(student_list)
     except Exception as se:
         # print(str(se))

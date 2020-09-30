@@ -68,17 +68,24 @@ def dl_students(course_id, AUTH_HEADER, API_URL):
         None (creates csv from data)
     '''
     student_list = _get_students(course_id, AUTH_HEADER, API_URL)
-
+    #print(student_list)
     # Default for extra_time and extra_attempts is null as requested
-    df = pd.DataFrame(columns=['name','SIS_id','canvas_id','extra_time','extra_attempts'])
-    for student in student_list:
-        df = df.append({
-            'name':student['name'],
-            'SIS_id': student['sis_user_id'],
-            'canvas_id': student['id'],
-            'extra_time': None,
-            'extra_attempts': None
-            }, ignore_index=True)
+    df = pd.DataFrame(student_list)
+    df = df[['name','sis_user_id','id']]
+    df['extra_time'] = ''
+    df['extra_attempts'] =''
+    df = df.rename(columns={"sis_user_id": "SIS_id", "id":"canvas_id"})
+    df = df[['name','SIS_id','canvas_id','extra_time','extra_attempts']]
+    #print(df)
+    # df = pd.DataFrame(columns=['name','SIS_id','canvas_id','extra_time','extra_attempts'])
+    # for student in student_list:
+    #     df = df.append({
+    #         'name':student['name'],
+    #         'SIS_id': student['sis_user_id'],
+    #         'canvas_id': student['id'],
+    #         'extra_time': None,
+    #         'extra_attempts': None
+    #         }, ignore_index=True)
     path = os.path.join(INPUT, 'input-all_course_students.csv')
     df.to_csv(path, index=False)
 
