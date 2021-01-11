@@ -45,10 +45,8 @@ You will need to create the quiz_extension environment. We use conda to manage o
 
 ---
 
-## Acknowledgement :star2:
+## Acknowledgement
 
 This adapatation was forked from https://github.com/ubccapico/quiz-extension where the original author acknowledgements were:
 
-> ### Author
->
 > - **Tyler Cinkant** - [Lannro](https://github.com/Lannro)
