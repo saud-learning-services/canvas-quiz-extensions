@@ -1,13 +1,13 @@
-name: quiz_extension
+name: quiz-extensions
 channels:
   - conda-forge
   - anaconda
   - defaults
 dependencies:
-  - python==3.7
+  - python>=3.7.0
   - termcolor
   - requests
   - pandas
   - pip
   - pip:
-      - canvasapi
+      - canvasapi>=2.0.0
