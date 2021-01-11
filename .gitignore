@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 *.ipynb
 *.DS_Store
+src/log/*
+!src/log/.gitignore
