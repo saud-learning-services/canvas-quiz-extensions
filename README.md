@@ -1,6 +1,6 @@
-# Quiz Extensions
+# Canvas Quiz Extensions
 
-> - name: quiz-extensions
+> - name: canvas-quiz-extensions
 > - ops-run-with: terminal
 > - python>=3.7
 > - canvasapi>=2.0.0
@@ -34,7 +34,7 @@ You will need to create the quiz_extension environment. We use conda to manage o
 
 ### Every Time
 
-1. `$ conda activate quiz_extension`
+1. `$ conda activate canvas-quiz-extensions`
 1. `$ python extend_quiz.py`
 
 ### Inputs for Required

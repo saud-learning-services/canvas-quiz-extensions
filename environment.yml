@@ -1,4 +1,4 @@
-name: quiz-extensions
+name: canvas-quiz-extensions
 channels:
   - conda-forge
   - anaconda
