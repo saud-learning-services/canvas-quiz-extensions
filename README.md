@@ -1,10 +1,10 @@
 # Canvas Quiz Extensions
 
 > - name: canvas-quiz-extensions
-> - ops-run-with: terminal
+> - run-with: terminal
 > - python>=3.7
 > - canvasapi>=2.0.0
-> - supports universal environment 🌎
+> - not an official ops script
 
 A project that takes input in the form of two CSVs and adds extra time or attempts for students on a list of quizzes.
 
@@ -22,10 +22,6 @@ A project that takes input in the form of two CSVs and adds extra time or attemp
 - We have not tested the behaviour of this script for non-published or past-due quizzes
 
 ## To Run
-
-> Are you Sauder LS Ops? Refer to the instructions [here](https://github.com/saud-learning-services/instructions-and-other-templates) but note that this project is only runnable via terminal for the time being.
-
-For more detailed instructions see [Detailed Instructions](detailed_instructions.md)
 
 ### First Time
 
