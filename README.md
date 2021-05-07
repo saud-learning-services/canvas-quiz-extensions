@@ -1,10 +1,10 @@
 # Canvas Quiz Extensions
 
 > - name: canvas-quiz-extensions
-> - run-with: terminal
+> - ops-run-with: jupyter
 > - python>=3.7
 > - canvasapi>=2.0.0
-> - not an official ops script
+> - supports universal environment 🌎
 
 A project that takes input in the form of two CSVs and adds extra time or attempts for students on a list of quizzes.
 
@@ -23,17 +23,23 @@ A project that takes input in the form of two CSVs and adds extra time or attemp
 
 ## To Run
 
-### First Time
+### Sauder Operations
+
+_Are you Sauder Operations Staff? Please go [here](https://github.com/saud-learning-services/instructions-and-other-templates/blob/main/docs/running-instructions.md) for detailed instructions to run in Jupyter. ("The Project", or "the-project" is "canvas-quiz-response-pdfs" or "Canvas Quiz Response PDFs")._
+
+### General (terminal instructions)
+
+#### First Time
 
 You will need to create the quiz_extension environment. We use conda to manage our projects.
 `$ conda env create -f environment.yml`
 
-### Every Time
+#### Every Time
 
 1. `$ conda activate canvas-quiz-extensions`
 1. `$ python extend_quiz.py`
 
-### Inputs for Required
+#### Inputs for Required
 
 1. Canvas API Token
 1. Canvas Course ID
