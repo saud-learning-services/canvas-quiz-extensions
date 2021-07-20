@@ -6,7 +6,7 @@
 > - canvasapi>=2.0.0
 > - supports universal environment 🌎
 
-A project that takes input in the form of two CSVs and adds extra time or attempts for students on a list of quizzes.
+A project that takes input in the form of two CSVs and adds extra time or attempts for students on a list of quizzes. This project is designed for advanced setup, not in-time adjustments during a quiz.
 
 * Terminal (or Jupyter) will prompt user and generate input .csv templates:
    * Edit `input/student_input.csv` with a list of students with corresponding extra attempts and time
@@ -20,6 +20,7 @@ A project that takes input in the form of two CSVs and adds extra time or attemp
 * The attempt and time extensions will be overwritten when you run this script (does not add extra attempts or time, replaces them)
 * The script assumes that you want to extend the time and/or attempts for each student for each quiz listed
 * We have not tested the behaviour of this script for non-published or past-due quizzes
+* Does **not** work to extend time OR attempts if the quiz uses an availability window, for example if the exam is set from 16:00-18:00, and a student is supposed to have an extra 20 minutes, this will **not work** with no error
 
 ## Inputs
 
